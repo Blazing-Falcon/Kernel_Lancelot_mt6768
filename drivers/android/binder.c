@@ -7139,6 +7139,9 @@ err_alloc_device_names_failed:
 err_alloc_shrinker_failed:
 	binder_destroy_pools();
 
+err_alloc_shrinker_failed:
+	binder_destroy_pools();
+
 	return ret;
 }
 
