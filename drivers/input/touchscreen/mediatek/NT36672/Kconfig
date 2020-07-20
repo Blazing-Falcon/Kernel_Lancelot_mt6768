@@ -9,3 +9,11 @@ config TOUCHSCREEN_MTK_NT36672
 	  to your system by SPI bus.
 
 	  If unsure, say N.
+
+config TOUCHSCREEN_MTK_NT36672_MP_CTRLRAM
+	bool "Novatek NT36672 Multipoint Control RAM"
+	depends on TOUCHSCREEN_MTK_NT36672
+	default n
+	help
+	  Say Y here if you need to use Multipoint Control RAM Testing
+	  If unsure, say N.
