@@ -1472,8 +1472,12 @@ static void mtk_jpeg_device_run(void *priv)
 device_run_end:
 	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
 	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-	v4l2_m2m_buf_done(to_vb2_v4l2_buffer(src_buf), buf_state);
-	v4l2_m2m_buf_done(to_vb2_v4l2_buffer(dst_buf), buf_state);
+	if (src_buf != NULL)
+		v4l2_m2m_buf_done(to_vb2_v4l2_buffer(src_buf), buf_state);
+
+	if (dst_buf != NULL)
+		v4l2_m2m_buf_done(to_vb2_v4l2_buffer(dst_buf), buf_state);
+
 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
 }
 
@@ -1721,8 +1725,10 @@ static irqreturn_t mtk_jpeg_irq(int irq, void *priv)
 	buf_state = VB2_BUF_STATE_DONE;
 
 irq_end:
-	v4l2_m2m_buf_done(to_vb2_v4l2_buffer(src_buf), buf_state);
-	v4l2_m2m_buf_done(to_vb2_v4l2_buffer(dst_buf), buf_state);
+	if (src_buf != NULL)
+		v4l2_m2m_buf_done(to_vb2_v4l2_buffer(src_buf), buf_state);
+	if (dst_buf != NULL)
+		v4l2_m2m_buf_done(to_vb2_v4l2_buffer(dst_buf), buf_state);
 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
 	return IRQ_HANDLED;
 }
