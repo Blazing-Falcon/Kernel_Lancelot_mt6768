@@ -2148,10 +2148,12 @@ void ged_dvfs_reset_opp_cost(int oppsize)
 {
 	int i;
 
-	if (oppsize > 0 && oppsize <= mt_gpufreq_get_dvfs_table_num()) {
+	if (g_aOppStat && oppsize > 0 && oppsize <= mt_gpufreq_get_dvfs_table_num()) {
 		for (i = 0; i < oppsize; i++) {
-			g_aOppStat[i].ui64Active = 0;
-			memset(g_aOppStat[i].aTransition, 0, sizeof(uint32_t) * oppsize);
+			if (g_aOppStat[i].aTransition) {
+				g_aOppStat[i].ui64Active = 0;
+				memset(g_aOppStat[i].aTransition, 0, sizeof(uint32_t) * oppsize);
+			}
 		}
 	}
 }
