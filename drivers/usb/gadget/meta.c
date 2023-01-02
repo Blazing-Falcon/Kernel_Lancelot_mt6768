@@ -1214,7 +1214,7 @@ static void do_android_usb_state_monitor_work(struct work_struct *work)
 		usb_state = "CONFIGURED";
 
 	pr_debug("usb_state<%s>\n", usb_state);
-	schedule_delayed_work(&android_usb_state_monitor_work,
+	queue_delayed_work(system_power_efficient_wq, &android_usb_state_monitor_work,
 			msecs_to_jiffies(USB_STATE_MONITOR_DELAY));
 }
 void trigger_android_usb_state_monitor_work(void)
