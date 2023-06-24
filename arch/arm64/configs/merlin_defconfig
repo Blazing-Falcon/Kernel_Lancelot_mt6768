@@ -479,11 +479,7 @@ CONFIG_WLAN_DRV_BUILD_IN=y
 # CONFIG_PRINTK_MT_PREFIX is not set
 CONFIG_MTK_SYSTRACKER_V2=n
 CONFIG_MTK_SYSTRACKER_DISABLE=y
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 92e6e67b0ded (ARM64: configs: Enable WireGuard)
+
 CONFIG_LLVM_POLLY=y
 
 #
