@@ -714,12 +714,16 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, array-compare)
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
-KBUILD_CFLAGS   += -O3
+KBUILD_CFLAGS   += -O2
+endif
+
 ifeq ($(cc-name),gcc)
 KBUILD_CFLAGS   += -mcpu=cortex-a75.cortex-a55 -mtune=cortex-a75.cortex-a55
 endif
+
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS   += -mcpu=cortex-a55 -mtune=cortex-a55
+endif
 
 ifdef CONFIG_LLVM_POLLY
 KBUILD_CFLAGS	+= -mllvm -polly \
@@ -731,8 +735,6 @@ KBUILD_CFLAGS	+= -mllvm -polly \
 		   -mllvm -polly-detect-keep-going \
 		   -mllvm -polly-vectorizer=stripmine \
 		   -mllvm -polly-invariant-load-hoisting
-endif
-endif
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
