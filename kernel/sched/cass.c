@@ -40,7 +40,7 @@ unsigned long cass_cpu_util(int cpu, bool sync)
 
 	/* Deduct @current's util from this CPU if this is a sync wake */
 	if (sync && cpu == smp_processor_id())
-		sub_positive(&util, task_util(current));
+		lsub_positive(&util, task_util(current));
 
 	if (sched_feat(UTIL_EST))
 		util = max_t(unsigned long, util,
