@@ -226,7 +226,7 @@ unsigned int __spm_output_wake_reason(
 		}
 	}
 	WARN_ON(strlen(buf) >= LOG_BUF_SIZE);
-
+/*
 	log_size += scnprintf(log_buf + log_size, LOG_BUF_OUT_SZ - log_size,
 		"%s wake up by %s, timer_out = %u, r13 = 0x%x, debug_flag = 0x%x 0x%x, ",
 		scenario, buf, wakesta->timer_out, wakesta->r13,
@@ -240,7 +240,7 @@ unsigned int __spm_output_wake_reason(
 	log_size += scnprintf(log_buf + log_size, LOG_BUF_OUT_SZ - log_size,
 		  " req_sta =  0x%x, event_reg = 0x%x, isr = 0x%x, ",
 		  wakesta->req_sta, wakesta->event_reg, wakesta->isr);
-
+*/
 	if (!strcmp(scenario, "suspend")) {
 		/* calculate 26M off percentage in suspend period */
 		if (wakesta->timer_out != 0) {
