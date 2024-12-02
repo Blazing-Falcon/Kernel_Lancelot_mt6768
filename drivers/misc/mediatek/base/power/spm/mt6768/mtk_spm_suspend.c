@@ -466,7 +466,9 @@ unsigned int spm_go_to_sleep_ex(unsigned int ex_flag)
 #if !defined(CONFIG_FPGA_EARLY_PORTING)
 	if (mtk8250_request_to_sleep()) {
 		last_wr = WR_UART_BUSY;
+#ifdef CONFIG_MTK_ENG_BUILD
 		printk_deferred("[name:spm&]Fail to request uart sleep\n");
+#endif
 		goto RESTORE_IRQ;
 	}
 #endif

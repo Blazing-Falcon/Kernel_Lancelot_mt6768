@@ -356,7 +356,9 @@ int mtk_idle_enter(int idle_type,
 	#if defined(CONFIG_SERIAL_8250_MT6577)
 	if (!(idle_flag & MTK_IDLE_LOG_DUMP_LP_GS)) {
 		if (mtk8250_request_to_sleep()) {
+#ifdef CONFIG_MTK_ENG_BUILD
 			printk_deferred("[name:spm&]Power/swap Fail to request uart sleep\n");
+#endif
 			goto RESTORE_UART;
 		}
 	}
