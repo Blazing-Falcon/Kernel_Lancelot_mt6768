@@ -231,9 +231,9 @@ void mtk_venc_dvfs_end(struct mtk_vcodec_ctx *ctx)
 			update_hist(venc_cur_job, &venc_hists, 0);
 		} else {
 			/* Set allowed time for slowmotion 4 buffer pack */
-			interval = (long long)(1000 * 4 /
+			interval = (long long)(1000 * 1000 * 4 /
 					(int)ctx->enc_params.operationrate);
-			update_hist(venc_cur_job, &venc_hists, interval*1000);
+			update_hist(venc_cur_job, &venc_hists, interval);
 		}
 		venc_jobs = venc_jobs->next;
 		kfree(venc_cur_job);

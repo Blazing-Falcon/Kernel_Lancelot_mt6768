@@ -21,7 +21,7 @@
 #include <linux/slab.h>
 #include "vcodec_dvfs.h"
 
-#define MAX_SUBMIT (33*1000)
+#define MAX_SUBMIT 33333
 #define SHOW_ALGO_INFO 0
 
 long long div_64(long long a, long long b)
