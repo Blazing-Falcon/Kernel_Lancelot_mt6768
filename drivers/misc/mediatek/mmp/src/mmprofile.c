@@ -1179,7 +1179,9 @@ EXPORT_SYMBOL(mmprofile_query_enable);
 void mmprofile_log_ex(mmp_event event, enum mmp_log_type type,
 	unsigned long data1, unsigned long data2)
 {
+#ifdef DEBUG
 	mmprofile_log_int(event, type, data1, data2, 0);
+#endif
 }
 EXPORT_SYMBOL(mmprofile_log_ex);
 
