@@ -37,7 +37,7 @@ DECLARE_PER_CPU(char[MET_STRBUF_SIZE], met_strbuf);
 		trace_puts(p);; \
 	} while (0)
 #else
-#define TRACE_PUTS(p) do {} while (0)
+#define TRACE_PUTS(p) ((void)0)
 #endif
 
 #define GET_MET_PRINTK_BUFFER_ENTER_CRITICAL() \

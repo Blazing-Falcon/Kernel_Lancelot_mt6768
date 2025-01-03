@@ -39,7 +39,7 @@
 #include "flashlight-dt.h"
 
 #define TAG_NAME "[flashligh_led191_drv]"
-#define PK_DBG_NONE(fmt, arg...)    do {} while (0)
+#define PK_DBG_NONE(fmt, arg...)    ((void)0)
 #define PK_DBG_FUNC(fmt, arg...) \
 	pr_debug(TAG_NAME "%s: " fmt, __func__, ##arg)
 #define PK_ERR(fmt, arg...) \
@@ -51,7 +51,7 @@
 	pr_info(TAG_NAME "%s is called.\n", __func__)
 #define PK_DBG         PK_DBG_FUNC
 #else
-#define PK_LOG(fmt, arg...)       do {} while (0)
+#define PK_LOG(fmt, arg...)       ((void)0)
 #define PK_DBG(a, ...)
 #endif
 
