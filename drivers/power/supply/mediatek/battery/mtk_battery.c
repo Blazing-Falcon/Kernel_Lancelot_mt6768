@@ -419,7 +419,9 @@ static int bms_get_property(struct power_supply *psy,
 		val->intval = gm.battery_id;
 		break;
 	case POWER_SUPPLY_PROP_CHARGE_FULL:
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("mtk_qmax_agin:%d qmax:%d\n", mtk_qmax_aging, qmax);
+#endif
 		if (mtk_qmax_aging < 50200)
 			qmax = mtk_qmax_aging * 100;
 		val->intval = qmax;
@@ -564,7 +566,9 @@ static int battery_get_property(struct power_supply *psy,
 		val->intval = battery_get_bat_avg_current() * 100;
 		break;
 	case POWER_SUPPLY_PROP_CHARGE_FULL:
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("mtk_qmax_agin:%d qmax:%d\n", mtk_qmax_aging, qmax);
+#endif
 		if (mtk_qmax_aging < 50200)
 			qmax = mtk_qmax_aging * 100;
 		val->intval = qmax;
