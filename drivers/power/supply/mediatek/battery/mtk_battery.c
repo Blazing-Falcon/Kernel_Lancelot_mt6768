@@ -4213,7 +4213,9 @@ static void otg_boost_limit_work(struct work_struct *work)
 		fgcurrent = 0 - fgcurrent;
 
 	current_now = fgcurrent * 100;
+#ifdef CONFIG_MTK_ENG_BUILD
 	pr_err("dhx--state:%d--current now = %d\n", b_ischarging, current_now);
+#endif
 	if (!primary_charger) {
 		pr_err("primary_charger is NULL\n");
 		primary_charger = get_charger_by_name("primary_chg");
@@ -4240,11 +4242,15 @@ static void otg_boost_limit_work(struct work_struct *work)
 	if (count_low >= 6)	{
 		charger_dev_set_otg_current(primary_charger, 1800000);
 		otg_ibat_limit = 0;
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("dhx---set otg current 1.8A\n");
+#endif
 	} else if (count_high == 6)	{
 		charger_dev_set_otg_current(primary_charger, 1000000);
 		otg_ibat_limit = 1;
+#ifdef CONFIG_MTK_ENG_BUILD
 		pr_err("dhx---set otg current 1A\n");
+#endif
 	}
 	schedule_delayed_work(&otg_boost_current_work, msecs_to_jiffies(10000));
 }
