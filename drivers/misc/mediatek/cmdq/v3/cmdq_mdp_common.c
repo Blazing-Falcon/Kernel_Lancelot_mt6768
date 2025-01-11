@@ -1615,7 +1615,7 @@ s32 cmdq_mdp_flush(struct cmdqCommandStruct *desc, bool user_space)
 static void cmdq_mdp_pool_create(void)
 {
 	if (unlikely(mdp_pool.pool)) {
-		cmdq_msg("mdp buffer pool already created");
+		pr_debug("mdp buffer pool already created");
 		return;
 	}
 
