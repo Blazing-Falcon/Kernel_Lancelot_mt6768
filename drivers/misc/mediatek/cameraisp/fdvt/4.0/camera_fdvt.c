@@ -784,6 +784,7 @@ void SmileDetecteConfig(void)
 /*=======================================================================*/
 void FDVT_DUMPREG(void)
 {
+#ifdef CONFIG_MTK_ENG_BUILD
 	unsigned int u4RegValue = 0;
 	unsigned int u4Index = 0;
 
@@ -794,6 +795,7 @@ void FDVT_DUMPREG(void)
 		u4RegValue = ioread32((void *)(FDVT_ADDR + u4Index));
 		LOG_INF("+0x%x 0x%x\n", u4Index, u4RegValue);
 	}
+#endif
 }
 
 /*=======================================================================*/
