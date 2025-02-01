@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2016 MediaTek Inc.
- * Copyright (C) 2021 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -126,8 +125,8 @@ static long ged_dispatch(struct file *pFile,
 
 	/* We make sure the both size are GE 0 integer.
 	 */
-	if (psBridgePackageKM->i32InBufferSize > 0
-		&& psBridgePackageKM->i32OutBufferSize > 0) {
+	if (psBridgePackageKM->i32InBufferSize >= 0
+		&& psBridgePackageKM->i32OutBufferSize >= 0) {
 
 		if (psBridgePackageKM->i32InBufferSize > 0) {
 			int32_t inputBufferSize =
@@ -241,11 +240,11 @@ static long ged_dispatch(struct file *pFile,
 			break;
 		case GED_BRIDGE_COMMAND_GE_GET:
 			VALIDATE_ARG(GE_GET);
-			ret = ged_bridge_ge_get(pvIn, pvOut, psBridgePackageKM->i32OutBufferSize);
+			ret = ged_bridge_ge_get(pvIn, pvOut);
 			break;
 		case GED_BRIDGE_COMMAND_GE_SET:
 			VALIDATE_ARG(GE_SET);
-			ret = ged_bridge_ge_set(pvIn, pvOut, psBridgePackageKM->i32InBufferSize);
+			ret = ged_bridge_ge_set(pvIn, pvOut);
 			break;
 		case GED_BRIDGE_COMMAND_GE_INFO:
 			VALIDATE_ARG(GE_INFO);
