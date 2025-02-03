@@ -36,12 +36,17 @@
 /****************************************************************************
  * DEBUG MACROS
  ***************************************************************************/
+#ifdef CONFIG_MTK_ENG_BUILD
 static int debug_enable_led_hal = 1;
 #define LEDS_DEBUG(format, args...) do { \
 	if (debug_enable_led_hal) {	\
 		pr_debug("[LED]"format, ##args);\
 	} \
 } while (0)
+#else
+static int debug_enable_led_hal = 0;
+#define LEDS_DEBUG(format, args...) ((void)0)
+#endif
 
 static struct ti_lmu_bl_chip *bl_chip;
 
