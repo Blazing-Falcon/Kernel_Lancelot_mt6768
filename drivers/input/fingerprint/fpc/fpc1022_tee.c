@@ -360,7 +360,7 @@ static ssize_t fingerdown_wait_set(struct device *device,
 
 		dev_dbg(fpc1022->dev, "%s\n", __func__);
 		if (!strncmp(buf, "enable", strlen("enable"))) {
-			printk("fingerdown_wait_set enable\n");
+			// printk("fingerdown_wait_set enable\n");
 			fpc1022->wait_finger_down = true;
 		dev_dbg(fpc1022->dev, "%s set wait_finger_down true\n", __func__);
 		} else if (!strncmp(buf, "disable", strlen("disable"))) {
@@ -402,7 +402,7 @@ static int fpc_fingerprint_freq_set(void)
 {
 	int i, cluster_num;
 
-	printk("fpc_fingerprint_freq_set\n");
+	// printk("fpc_fingerprint_freq_set\n");
 	cluster_num = arch_get_nr_clusters();
 	if (cluster_num > BSP_CERVINO_CLUSTER_NUMBERS)
 		cluster_num = BSP_CERVINO_CLUSTER_NUMBERS;
@@ -426,7 +426,7 @@ static int fpc_fingerprint_freq_release(void)
 {
 	int i, cluster_num;
 
-	printk("fpc_fingerprint_freq_release\n");
+	// printk("fpc_fingerprint_freq_release\n");
 	cluster_num = arch_get_nr_clusters();
 	if (cluster_num > BSP_CERVINO_CLUSTER_NUMBERS)
 		cluster_num = BSP_CERVINO_CLUSTER_NUMBERS;
@@ -447,14 +447,14 @@ static int fpc_fingerprint_freq_release(void)
 
 static int fpc_fingerprint_vcorefs_hold(void)
 {
-	printk("fpc_fingerprint_vcorefs_hold\n");
+	// printk("fpc_fingerprint_vcorefs_hold\n");
 	pm_qos_update_request(&fpc_fingerprint_ddr_req, DDR_OPP_0);
 	return 0;
 }
 
 static int fpc_fingerprint_vcorefs_release(void)
 {
-	printk("fpc_fingerprint_vcorefs_release\n");
+	// printk("fpc_fingerprint_vcorefs_release\n");
 	pm_qos_update_request(&fpc_fingerprint_ddr_req, DDR_OPP_UNREQ);
 	return 0;
 }
@@ -462,13 +462,13 @@ static int fpc_fingerprint_vcorefs_release(void)
 extern int mdss_prim_panel_fb_unblank(int timeout);
 static void notification_work(struct work_struct *work)
 {
-	printk("notification_work fpc unblank start\n");
+	// printk("notification_work fpc unblank start\n");
 	fpc_fingerprint_freq_set();
 	fpc_fingerprint_vcorefs_hold();
 	mdss_prim_panel_fb_unblank(FP_UNLOCK_REJECTION_TIMEOUT);
 	fpc_fingerprint_freq_release();
 	fpc_fingerprint_vcorefs_release();
-	printk("notification_work fpc unblank end\n");
+	// printk("notification_work fpc unblank end\n");
 }
 /* end modify for unlock speed */
 
@@ -478,7 +478,7 @@ static irqreturn_t fpc1022_irq_handler(int irq, void *handle)
 
 	/* Make sure 'wakeup_enabled' is updated before using it
 	 ** since this is interrupt context (other thread...) */
-	pr_debug("fpc1022_irq_handler");
+	//pr_debug("fpc1022_irq_handler");
 	smp_rmb();
 
 	/* if (fpc1022->wakeup_enabled) { */
@@ -486,8 +486,8 @@ static irqreturn_t fpc1022_irq_handler(int irq, void *handle)
 	/* } */
 
 	/* begin modify for unlock speed */
-	pr_debug("%s fastScreenOn wait_finger_down = %d, fb_black = %d \n", __func__,
-			fpc1022->wait_finger_down, fpc1022->fb_black);
+	/* pr_debug("%s fastScreenOn wait_finger_down = %d, fb_black = %d \n", __func__,
+			fpc1022->wait_finger_down, fpc1022->fb_black); */
 	if (fpc1022->wait_finger_down && fpc1022->fb_black) {
 			fpc1022->wait_finger_down = false;
 			schedule_work(&fpc1022->work);
@@ -505,7 +505,7 @@ static void fpc_early_suspend(struct early_suspend *handler)
 {
 	struct fpc1022_data *fpc1022 = container_of(handler,
 		struct fpc1022_data, early_suspend);
-	printk("%s enter\n", __func__);
+	// printk("%s enter\n", __func__);
 
 	fpc1022->fb_black = true;
 }
@@ -514,7 +514,7 @@ static void fpc_late_resume(struct early_suspend *handler)
 {
 	struct fpc1022_data *fpc1022 = container_of(handler,
 		struct fpc1022_data, early_suspend);
-	printk("%s enter\n", __func__);
+	// printk("%s enter\n", __func__);
 
 	fpc1022->fb_black = false;
 }
@@ -535,21 +535,21 @@ static int fpc_fb_notifier_callback(struct notifier_block *self,
 	if (event != FB_EVENT_BLANK)
 		return 0;
 
-	printk("[info] %s value = %d\n", __func__, (int)event);
+	// printk("[info] %s value = %d\n", __func__, (int)event);
 
 	if (evdata && evdata->data && event == FB_EVENT_BLANK) {
 		blank = *(int *)(evdata->data);
 		switch (blank) {
 		case FB_BLANK_POWERDOWN:
-			printk("%s lcd off notify\n", __func__);
+			// printk("%s lcd off notify\n", __func__);
 			fpc1022->fb_black = true;
 			break;
 		case FB_BLANK_UNBLANK:
-			printk("%s lcd on notify\n", __func__);
+			// printk("%s lcd on notify\n", __func__);
 			fpc1022->fb_black = false;
 			break;
 		default:
-			printk("%s other notifier, ignore\n", __func__);
+			// printk("%s other notifier, ignore\n", __func__);
 			break;
 	}
 }
