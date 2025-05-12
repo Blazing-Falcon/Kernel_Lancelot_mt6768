@@ -100,14 +100,14 @@
 	board_id3-gpios = <&pio 6 0>;
 	status = "okay";
 };
-/*
-&board_id {
-	io-channels = <&auxadc 3>;
-	io-channel-names = "board_id-channel";
-	status = "okay";
-};
-*/
 
+&mt_charger {
+	interrupt-parent = <&pio>;
+	reverse-gpio = <&pio 91 0>;
+	pinctrl-names = "reverse_high", "reverse_low";
+	pinctrl-0 = <&reverse_high>;
+	pinctrl-1 = <&reverse_low>;
+};
 /* flashlight start */
 &flashlights_led191 {
 	pinctrl-names = "default", "hw_ch0_high",
@@ -153,14 +153,6 @@
 	};
 };
 /* flashlight end*/
-
-&mt_charger {
-	interrupt-parent = <&pio>;
-	reverse-gpio = <&pio 91 0>;
-	pinctrl-names = "reverse_high", "reverse_low";
-	pinctrl-0 = <&reverse_high>;
-	pinctrl-1 = <&reverse_low>;
-};
 /* TOUCH start */
 &touch {
 	tpd-resolution = <1080 2340>;
@@ -228,6 +220,7 @@
 
 };
 /* TOUCH end */
+
 &i2c3 {
 	status = "okay";
 	nxp@28 {
@@ -244,7 +237,6 @@
 	};
 
 };
-/* add goodix fingerprint start*/
 
 &spi5 {
 	#address-cells = <1>;
@@ -256,6 +248,9 @@
 		status = "okay";
 	};
 };
+
+
+/* add goodix fingerprint start*/
 
 
 &spi2 {
@@ -519,7 +514,7 @@
 	compatible = "ktd,ktd3137";
 	reg = <0x37>;
 	status = "okay";
-        /*ktd,pwm-mode; */
+	/*ktd,pwm-mode; */
 	ktd,using-lsb = <1>;
 	ktd,pwm-frequency = <100>;
 	ktd,bl-fscal-led = <0x98>;/*default 20.2mA*/
@@ -697,24 +692,22 @@
 &spi0 {
 	status = "ok";
 
-
 	/* Novatek device tree node */
 	novatek@0 {
-		compatible = "novatek,NVT-ts-spi","focaltech,fts";
-		reg = <0>; //Same as CS ID
-		status = "ok";
+	compatible = "novatek,NVT-ts-spi","focaltech,fts";
+	reg = <0>; //Same as CS ID
+	status = "ok";
 
-		spi-max-frequency = <8000000>;
-		//4800000,9600000,15000000,19200000;ft8719 max limit 8M
-		novatek,reset-gpio = <&pio 92 0x00>;
-		novatek,irq-gpio = <&pio 1 0x2001>;
+	spi-max-frequency = <8000000>; //4800000,9600000,15000000,19200000;ft8719 max limit 8M
+	novatek,reset-gpio = <&pio 92 0x00>;
+	novatek,irq-gpio = <&pio 1 0x2001>;
 
-		/* 525 */
-		//novatek,swrst-n8-addr = <0x01F01A>;
+	/* 525 */
+	//novatek,swrst-n8-addr = <0x01F01A>;
 
-		/* 672A, 525B, 675, 526 */
-		novatek,swrst-n8-addr = <0x03F0FE>;
-		novatek,spi-rd-fast-addr = <0x03F310>;
+	/* 672A, 525B, 675, 526 */
+	novatek,swrst-n8-addr = <0x03F0FE>;
+	novatek,spi-rd-fast-addr = <0x03F310>;
 
 		/* MP */
 		novatek,mp-support-dt;
@@ -1953,19 +1946,13 @@
 
 			PS_Config_Diff_Test_Frame = <50>;
 		};
-	};
 
-	/*
-    focaltech_spi@1 {
-        compatible = "focaltech,fts";
-        reg = <1>;
-        spi-max-frequency = <8000000>;//ft8719 max limit 8M
-	    status = "ok";
-    };*/
+	};
 
 };
 
-#include "mediatek/merlin/cust.dtsi"
+/* DISPSYS GPIO standardization end*/
 
+#include "mediatek/merlin/cust.dtsi"
 #include "mediatek/cust_mt6768_camera.dtsi"
 /*End of this file, DO NOT ADD ANYTHING HERE*/

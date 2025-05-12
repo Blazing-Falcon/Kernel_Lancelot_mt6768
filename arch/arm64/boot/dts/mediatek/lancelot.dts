@@ -350,10 +350,10 @@
 /* AWINIC AW87519 Smart PA */
 &i2c7 {
 	aw87519@58 {
-			compatible = "awinic,aw87519_pa";
-			reg = <0x58>;
-			reset-gpio = <&pio 22 0>;
-			status = "okay";
+		compatible = "awinic,aw87519_pa";
+		reg = <0x58>;
+		reset-gpio = <&pio 22 0>;
+		status = "okay";
 	};
 };
 /* AWINIC AW87519 Smart PA End */
@@ -684,12 +684,12 @@
 	status = "ok";
 
 	/* Novatek device tree node */
-	novatek36672@0 {
+	novatek: novatek36672@0 {
 	compatible = "novatek36672,NVT-ts-spi","focaltech8719P,FTS-ts-spi";
 	reg = <0>; //Same as CS ID
 	status = "ok";
 
-	spi-max-frequency = <8000000>;	//4800000,9600000,15000000,19200000
+	spi-max-frequency = <8000000>; //4800000,9600000,15000000,19200000
 	novatek,reset-gpio = <&pio 92 0x00>;
 	novatek,irq-gpio = <&pio 1 0x2001>;
 
@@ -700,7 +700,7 @@
 	novatek,swrst-n8-addr = <0x03F0FE>;
 	novatek,spi-rd-fast-addr = <0x03F310>;
 
-	/* MP */
+		/* MP */
 		novatek,mp-support-dt;
 
 		novatek-mp-criteria-5932@0 {
@@ -1523,7 +1523,8 @@
 
 			PS_Config_Diff_Test_Frame = <50>;
 		};
-/*for Xiaomi J19 672D BOE6.53" DJN module*/
+
+		/*for Xiaomi J19 672D BOE6.53" DJN module*/
 		novatek-mp-criteria-5944@0 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -1936,19 +1937,6 @@
 
 	};
 
-	/*
-	focaltech@0 {
-			compatible = "focaltech8719P,FTS-ts-spi";
-			reg = <0>;
-			spi-max-frequency = <8000000>;
-			interrupt-parent = <&pio>;
-			interrupts = <1 0x2>;
-			focaltech,reset-gpio = <&pio 92 0x00>;
-			focaltech,irq-gpio = <&pio 1 0x2001>;
-			focaltech,max-touch-number = <10>;
-			focaltech,display-coords =  <0 0 1080 2340>;
-		};
-	*/
 };
 
 /* DISPSYS GPIO standardization end*/
