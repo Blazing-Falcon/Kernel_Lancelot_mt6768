@@ -891,7 +891,7 @@ nvt_f2c_retry:
 	if ((buf[1] & 0x01) == 0x00)
 		break;
 
-	usleep_range(1000, 1000);
+	usleep_range(1000, 2000);
 	retry++;
 
 	if(unlikely(retry > 40)) {

@@ -153,7 +153,7 @@ const struct mtk_chip_config spi_ctrdata = {
 };
 #endif
 
-uint8_t	bTouchIsAwake;
+uint8_t bTouchIsAwake = 0;
 
 /*******************************************************
 Description:
@@ -483,6 +483,8 @@ return:
 *******************************************************/
 int32_t nvt_clear_fw_status(void)
 {
+	usleep_range(20000, 21000);
+
 	uint8_t buf[8] = {0};
 	int32_t i = 0;
 	const int32_t retry = 20;
@@ -1798,7 +1800,7 @@ static int32_t nvt_ts_probe(struct spi_device *client)
 	}
 	INIT_DELAYED_WORK(&ts->nvt_fwu_work, Boot_Update_Firmware);
 	// please make sure boot update start after display reset(RESX) sequence
-	queue_delayed_work(nvt_fwu_wq, &ts->nvt_fwu_work, msecs_to_jiffies(11000));
+	queue_delayed_work(nvt_fwu_wq, &ts->nvt_fwu_work, msecs_to_jiffies(14000));
 #endif
 
 	NVT_LOG("NVT_TOUCH_ESD_PROTECT is %d\n", NVT_TOUCH_ESD_PROTECT);

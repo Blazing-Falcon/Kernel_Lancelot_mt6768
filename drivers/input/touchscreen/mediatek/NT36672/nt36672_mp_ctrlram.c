@@ -60,36 +60,36 @@ static	int32_t	TP_SELFTEST_Open_flag;
 			printk(fmt, ##args);	\
 	} while (0)
 
-static uint8_t *RecordResult_Short;
-static uint8_t *RecordResult_Open;
-static uint8_t *RecordResult_FWMutual;
-static uint8_t *RecordResult_FW_CC;
-static uint8_t *RecordResult_FW_DiffMax;
-static uint8_t *RecordResult_FW_DiffMin;
+static uint8_t *RecordResult_Short = NULL;
+static uint8_t *RecordResult_Open = NULL;
+static uint8_t *RecordResult_FWMutual = NULL;
+static uint8_t *RecordResult_FW_CC = NULL;
+static uint8_t *RecordResult_FW_DiffMax = NULL;
+static uint8_t *RecordResult_FW_DiffMin = NULL;
 
-static int32_t TestResult_Short;
-static int32_t TestResult_Open;
-static int32_t TestResult_FW_Rawdata;
-static int32_t TestResult_FWMutual;
-static int32_t TestResult_FW_CC;
-static int32_t TestResult_Noise;
-static int32_t TestResult_FW_DiffMax;
-static int32_t TestResult_FW_DiffMin;
+static int32_t TestResult_Short = 0;
+static int32_t TestResult_Open = 0;
+static int32_t TestResult_FW_Rawdata = 0;
+static int32_t TestResult_FWMutual = 0;
+static int32_t TestResult_FW_CC = 0;
+static int32_t TestResult_Noise = 0;
+static int32_t TestResult_FW_DiffMax = 0;
+static int32_t TestResult_FW_DiffMin = 0;
 
-static int32_t TestResult_SPI_Comm;
-static int32_t *RawData_Short;
-static int32_t *RawData_Open;
-static int32_t *RawData_Diff;
-static int32_t *RawData_Diff_Min;
-static int32_t *RawData_Diff_Max;
-static int32_t *RawData_FWMutual;
-static int32_t *RawData_FW_CC;
-static struct proc_dir_entry *proc_android_touch_entry;
-static struct proc_dir_entry *NVT_proc_selftest_entry;
-static struct proc_dir_entry *nvt_proc_create_tp_lock_down;
-static	struct	proc_dir_entry	*NVT_proc_tp_selftest_entry;
-static int8_t nvt_mp_test_result_printed;
-static uint8_t fw_ver;
+static int32_t TestResult_SPI_Comm = 0;
+static int32_t *RawData_Short = NULL;
+static int32_t *RawData_Open = NULL;
+static int32_t *RawData_Diff = NULL;
+static int32_t *RawData_Diff_Min = NULL;
+static int32_t *RawData_Diff_Max = NULL;
+static int32_t *RawData_FWMutual = NULL;
+static int32_t *RawData_FW_CC = NULL;
+static struct proc_dir_entry *proc_android_touch_entry = 0;
+static struct proc_dir_entry *NVT_proc_selftest_entry = 0;
+static struct proc_dir_entry *nvt_proc_create_tp_lock_down = 0;
+static struct proc_dir_entry	*NVT_proc_tp_selftest_entry = 0;
+static int8_t nvt_mp_test_result_printed = 0;
+static uint8_t fw_ver = 0;
 
 extern void nvt_change_mode(uint8_t mode);
 extern uint8_t nvt_get_fw_pipe(void);
@@ -401,7 +401,7 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 		}
 		nvt_print_data_log_in_one_line(rawdata + y * x_ch, x_ch);
 		printk("\n");
-		sprintf(fbufp + (iArrayIndex + 1) * 7 + y * 2, "\r\n");
+		sprintf(fbufp + (iArrayIndex + 1) * 7 + y * 2,"\r\n");
 	}
 #if TOUCH_KEY_NUM > 0
 	keydata_output_offset = y_ch * x_ch * 7 + y_ch * 2;
@@ -465,6 +465,8 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 
 static int32_t nvt_polling_hand_shake_status(void)
 {
+	usleep_range(20000, 21000);
+
 	uint8_t buf[8] = {0};
 	int32_t i = 0;
 	const int32_t retry = 70;
@@ -481,7 +483,7 @@ static int32_t nvt_polling_hand_shake_status(void)
 		if ((buf[1] == 0xA0) || (buf[1] == 0xA1))
 			break;
 
-		usleep_range(10000, 10000);
+		usleep_range(10000, 11000);
 	}
 
 	if (i >= retry) {
@@ -1040,15 +1042,15 @@ void print_selftest_result(int32_t TestResult, uint8_t RecordResult[], int32_t r
 
 	switch (TestResult) {
 	case 0:
-			nvt_mp_printf(" PASS!\n");
+			nvt_mp_printf("PASS!\n");
 			break;
 
 	case 1:
-			nvt_mp_printf(" ERROR! Read Data FAIL!\n");
+			nvt_mp_printf("ERROR! Read Data FAIL!\n");
 			break;
 
 	case -1:
-			nvt_mp_printf(" FAIL!\n");
+			nvt_mp_printf("FAIL!\n");
 			nvt_mp_printf("RecordResult:\n");
 			for (i = 0; i < y_len; i++) {
 				if (!nvt_mp_test_result_printed)
@@ -1095,10 +1097,10 @@ static int32_t c_show_selftest(struct seq_file *m, void *v)
 	nvt_mp_printf("SPI Communication Test");
 		if (TestResult_SPI_Comm == 0) {
 			test_result_bmp[0] = 'P';
-			nvt_mp_printf(" PASS!\n\n");
+			nvt_mp_printf("PASS!\n");
 		} else {
 			test_result_bmp[0] = 'F';
-			nvt_mp_printf(" FAIL!\n\n");
+			nvt_mp_printf("FAIL!\n");
 		}
 
 	nvt_mp_printf("Short Test");
@@ -1123,7 +1125,7 @@ static int32_t c_show_selftest(struct seq_file *m, void *v)
 		print_selftest_result(TestResult_FWMutual, RecordResult_FWMutual, RawData_FWMutual, X_Channel, Y_Channel);
 	} else { // TestResult_FW_Rawdata is -1
 		test_result_bmp[1] = 'F';
-		nvt_mp_printf(" FAIL!\n");
+		nvt_mp_printf("FAIL!\n");
 		if (TestResult_FWMutual == -1) {
 			nvt_mp_printf("FW Mutual");
 			print_selftest_result(TestResult_FWMutual, RecordResult_FWMutual, RawData_FWMutual, X_Channel, Y_Channel);
@@ -1140,7 +1142,7 @@ static int32_t c_show_selftest(struct seq_file *m, void *v)
 		print_selftest_result(TestResult_FW_DiffMax, RecordResult_FW_DiffMax, RawData_Diff_Max, X_Channel, Y_Channel);
 	} else { // TestResult_Noise is -1
 		test_result_bmp[4] = 'F';
-		nvt_mp_printf(" FAIL!\n");
+		nvt_mp_printf("FAIL!\n");
 
 		if (TestResult_FW_DiffMax == -1) {
 			nvt_mp_printf("FW Diff Max");
@@ -1741,7 +1743,7 @@ void nvt_lockdown_proc_deinit(void)
 #endif
 
 #if	TP_SELFTEST
-extern	uint8_t	bTouchIsAwake;
+extern uint8_t bTouchIsAwake;
 static int32_t c_tp_selftest_show(struct seq_file *m, void *v)
 {
 	NVT_LOG("+++\n");
@@ -1918,8 +1920,6 @@ static ssize_t nvt_tp_selftest_store(struct file *file, const char __user *buff,
 		NVT_ERR("check fw reset state failed!\n");
 		return -EAGAIN;
 	}
-
-	msleep(100);
 
 	//--Short Test---
 	if (TP_SELFTEST_Short_flag) {
