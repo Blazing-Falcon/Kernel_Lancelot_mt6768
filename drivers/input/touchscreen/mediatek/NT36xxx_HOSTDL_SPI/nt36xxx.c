@@ -486,6 +486,8 @@ return:
 *******************************************************/
 int32_t nvt_clear_fw_status(void)
 {
+	usleep_range(20000, 21000);
+
 	uint8_t buf[8] = {0};
 	int32_t i = 0;
 	const int32_t retry = 20;
