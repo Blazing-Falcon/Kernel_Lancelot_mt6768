@@ -241,14 +241,14 @@ static int32_t c_show(struct seq_file *m, void *v)
 		for (j = 0; j < ts->x_num; j++) {
 			seq_printf(m, "%5d, ", xdata[i * ts->x_num + j]);
 		}
-		seq_puts(m, "\n");
+		seq_putc(m, '\n');
 	}
 
 #if TOUCH_KEY_NUM > 0
 	for (i = 0; i < TOUCH_KEY_NUM; i++) {
 		seq_printf(m, "%5d, ", xdata[ts->x_num * ts->y_num + i]);
 	}
-	seq_puts(m, "\n");
+	seq_putc(m, '\n');
 #endif
 
 	seq_printf(m, "\n\n");
@@ -288,7 +288,7 @@ static int32_t nvt_data_dump_show(struct seq_file *m, void *v)
 		for (j = 0; j < ts->x_num; j++) {
 			seq_printf(m, "%5d, ", xdata[i * ts->x_num + j]);
 		}
-		seq_puts(m, "\n");
+		seq_putc(m, '\n');
 	}
 
 	memset(xdata, 0, sizeof(xdata));
@@ -315,7 +315,7 @@ static int32_t nvt_data_dump_show(struct seq_file *m, void *v)
 		for (j = 0; j < ts->x_num; j++) {
 			seq_printf(m, "%5d, ", xdata[i * ts->x_num + j]);
 		}
-		seq_puts(m, "\n");
+		seq_putc(m, '\n');
 	}
 
 	return 0;
