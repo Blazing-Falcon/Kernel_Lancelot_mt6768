@@ -1007,11 +1007,11 @@ int get_dlpt_imix(void)
 				/ 10;
 
 #if (CONFIG_MTK_GAUGE_VERSION == 30)
-	pr_info("[%s] %d,%d,%d,%d,%d,%d,%d\n", __func__,
+	pr_debug("[%s] %d,%d,%d,%d,%d,%d,%d\n", __func__,
 		volt_avg, curr_avg, g_lbatInt1, ptim_rac_val_avg, imix,
 		battery_get_soc(), battery_get_uisoc());
 #else
-	pr_info("[%s] %d,%d,%d,%d,%d,NA,NA\n", __func__,
+	pr_debug("[%s] %d,%d,%d,%d,%d,NA,NA\n", __func__,
 		volt_avg, curr_avg, g_lbatInt1, ptim_rac_val_avg, imix);
 #endif
 
