@@ -2,6 +2,8 @@
 # Makefile for misc devices that really don't fit anywhere else.
 #
 
+ccflags-y += -I$(srctree)/include
+
 obj-$(CONFIG_MTK_LENS)   += main/
 obj-$(CONFIG_MTK_LENS)   += main2/
 obj-$(CONFIG_MTK_LENS)   += main3/

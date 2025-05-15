@@ -36,7 +36,6 @@
 
 #define AK7372AF_I2C_SLAVE_ADDR 0x18
 
-#define AF_DEBUG
 #ifdef AF_DEBUG
 #define LOG_INF(format, args...)                                               \
 	pr_info(AF_DRVNAME " [%s] " format, __func__, ##args)
