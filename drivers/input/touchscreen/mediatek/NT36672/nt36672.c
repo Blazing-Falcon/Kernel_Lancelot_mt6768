@@ -693,19 +693,19 @@ int __init is_lcm_detect(char *str)
 {
 	if (!(strcmp(str, "ft8719_fhdp_dsi_vdo_huaxing_j19_lcm_drv"))) {
 		is_ft_lcm = 2;
-		pr_debug("Func:%s is_ft 2:%d", __func__, is_ft_lcm);
+		NVT_LOG("Func:%s is_ft 2:%d", __func__, is_ft_lcm);
 	} else if (!(strcmp(str, "nt36672A_fhdp_dsi_vdo_dijing_j19_lcm_drv"))) {
 		is_ft_lcm = 1;
-		pr_debug("Func:%s is_ft 1:%d", __func__, is_ft_lcm);
+		NVT_LOG("Func:%s is_ft 1:%d", __func__, is_ft_lcm);
 	}  else if (!(strcmp(str, "nt36672D_fhdp_dsi_vdo_dijing_j19_lcm_drv"))) {
 		is_ft_lcm = 3;
-		pr_debug("Func:%s is_ft 0:%d", __func__, is_ft_lcm);
+		NVT_LOG("Func:%s is_ft 0:%d", __func__, is_ft_lcm);
 	}
 	else if (!(strcmp(str, "nt36672A_fhdp_dsi_vdo_tianma_j19_lcm_drv"))) {
 		is_ft_lcm = 0;
-		pr_debug("Func:%s is_ft 0:%d", __func__, is_ft_lcm);
+		NVT_LOG("Func:%s is_ft 0:%d", __func__, is_ft_lcm);
 	}
-	pr_debug("Func:%s is_lcm_detect:%s", __func__, str);
+	NVT_LOG("Func:%s is_lcm_detect:%s", __func__, str);
 	return 0;
 }
  __setup("LCM_name=", is_lcm_detect);
@@ -722,14 +722,14 @@ void get_tp_info(void)
 	nvt_get_fw_info();
 	if (is_ft_lcm == 0) {
 		sprintf(tp_version_info, "[Vendor]Tianma,[TP-IC]:NT36672,[FW]0x%x", tp_fw_version);
-		printk("[%s]: [Vendor]Tianma,[TP-IC]:NT36672,tp_version %s\n", __func__, tp_version_info);
+		NVT_LOG("[%s]: [Vendor]Tianma,[TP-IC]:NT36672,tp_version %s\n", __func__, tp_version_info);
 	} else if (is_ft_lcm == 1) {
 		sprintf(tp_version_info, "[Vendor]Dijing,[TP-IC]:NT36672,[FW]0x%x", tp_fw_version);
-		printk("[%s]: [Vendor]Dijing,[TP-IC]:NT36672,tp_version %s\n", __func__, tp_version_info);
+		NVT_LOG("[%s]: [Vendor]Dijing,[TP-IC]:NT36672,tp_version %s\n", __func__, tp_version_info);
 	}
 	else if (is_ft_lcm == 3) {
 		sprintf(tp_version_info, "[Vendor]Dijing,[TP-IC]:NT36672D,[FW]0x%x", tp_fw_version);
-		printk("[%s]: [Vendor]Dijing,[TP-IC]:NT36672D,tp_version %s\n", __func__, tp_version_info);
+		NVT_LOG("[%s]: [Vendor]Dijing,[TP-IC]:NT36672D,tp_version %s\n", __func__, tp_version_info);
 	}
 	hq_regiser_hw_info(HWID_CTP, tp_version_info);
 
@@ -1343,10 +1343,10 @@ static irqreturn_t nvt_ts_work_func(int irq, void *data)
 /*
 	//--- dump SPI buf ---
 	for (i = 0; i < 10; i++) {
-		pr_debug("%02X %02X %02X %02X %02X %02X  ",
+		NVT_LOG("%02X %02X %02X %02X %02X %02X  ",
 			point_data[1+i*6], point_data[2+i*6], point_data[3+i*6], point_data[4+i*6], point_data[5+i*6], point_data[6+i*6]);
 	}
-	pr_debug("\n");
+	NVT_LOG("\n");
 */
 
 #if NVT_TOUCH_WDT_RECOVERY
@@ -2362,23 +2362,23 @@ static void nvt_ts_late_resume(struct early_suspend *h)
 #ifdef CONFIG_PM
 static int nvt_ts_pm_suspend(struct device *dev)
 {
-	pr_debug("%s:++\n", __func__);
+	NVT_LOG("%s:++\n", __func__);
 
 	ts->dev_pm_suspend = true;
 	reinit_completion(&ts->dev_pm_resume_completion);
 
-	pr_debug("%s:--\n", __func__);
+	NVT_LOG("%s:--\n", __func__);
 	return 0;
 }
 
 static int nvt_ts_pm_resume(struct device *dev)
 {
-	pr_debug("%s:++\n", __func__);
+	NVT_LOG("%s:++\n", __func__);
 
 	ts->dev_pm_suspend = false;
 	complete(&ts->dev_pm_resume_completion);
 
-	pr_debug("%s:--\n", __func__);
+	NVT_LOG("%s:--\n", __func__);
 	return 0;
 }
 
@@ -2429,7 +2429,7 @@ static int32_t __init nvt_driver_init(void)
 	int32_t ret = 0;
 
 	NVT_LOG("start\n");
-	pr_debug("%s result  is_ft:%d", __func__, is_ft_lcm);
+	NVT_LOG("%s result  is_ft:%d", __func__, is_ft_lcm);
 	if (2 == is_ft_lcm)
 		return -1;
 
