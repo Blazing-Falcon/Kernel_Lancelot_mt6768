@@ -40,6 +40,9 @@
 #include <linux/platform_data/spi-mt65xx.h>
 #endif
 
+#define NVT_DEBUG 0
+#define NVT_NDEBUG 1
+
 //---GPIO number---
 #define NVTTOUCH_RST_PIN 980
 #define NVTTOUCH_INT_PIN 943
@@ -57,7 +60,11 @@
 #if NVT_DEBUG
 #define NVT_LOG(fmt, args...)    pr_err("[%s] %s %d: " fmt, NVT_SPI_NAME, __func__, __LINE__, ##args)
 #else
+#if NVT_NDEBUG
+#define NVT_LOG(fmt, args...) ((void)0)
+#else
 #define NVT_LOG(fmt, args...)    pr_debug("[%s] %s %d: " fmt, NVT_SPI_NAME, __func__, __LINE__, ##args)
+#endif
 #endif
 #define NVT_ERR(fmt, args...)    pr_err("[%s] %s %d: " fmt, NVT_SPI_NAME, __func__, __LINE__, ##args)
 

@@ -267,7 +267,7 @@ static void nvt_print_data_log_in_one_line(int32_t *data, int32_t data_num)
 		sprintf(tmp_log + i * 7, "%5d, ", data[i]);
 	}
 	tmp_log[data_num * 7] = '\0';
-	printk("%s", tmp_log);
+	NVT_LOG("%s", tmp_log);
 	if (tmp_log) {
 		kfree(tmp_log);
 		tmp_log = NULL;
@@ -291,7 +291,7 @@ static void nvt_print_result_log_in_one_line(uint8_t *result, int32_t result_num
 		sprintf(tmp_log + i * 6, "0x%02X, ", result[i]);
 	}
 	tmp_log[result_num * 6] = '\0';
-	printk("%s", tmp_log);
+	NVT_LOG("%s", tmp_log);
 	if (tmp_log) {
 		kfree(tmp_log);
 		tmp_log = NULL;
@@ -313,11 +313,11 @@ static void nvt_print_lmt_array(int32_t *array, int32_t x_ch, int32_t y_ch)
 
 	for (j = 0; j < y_ch; j++) {
 		nvt_print_data_log_in_one_line(array + j * x_ch, x_ch);
-		printk("\n");
+		NVT_LOG("\n");
 	}
 #if TOUCH_KEY_NUM > 0
 	nvt_print_data_log_in_one_line(array + y_ch * x_ch, Key_Channel);
-	printk("\n");
+	NVT_LOG("\n");
 #endif /* #if TOUCH_KEY_NUM > 0 */
 }
 
@@ -326,33 +326,33 @@ static void nvt_print_criteria(void)
 	NVT_LOG("++\n");
 
 	//---PS_Config_Lmt_Short_Rawdata---
-	printk("PS_Config_Lmt_Short_Rawdata_P:\n");
+	NVT_LOG("PS_Config_Lmt_Short_Rawdata_P:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_Short_Rawdata_P, X_Channel, Y_Channel);
-	printk("PS_Config_Lmt_Short_Rawdata_N:\n");
+	NVT_LOG("PS_Config_Lmt_Short_Rawdata_N:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_Short_Rawdata_N, X_Channel, Y_Channel);
 
 	//---PS_Config_Lmt_Open_Rawdata---
-	printk("PS_Config_Lmt_Open_Rawdata_P:\n");
+	NVT_LOG("PS_Config_Lmt_Open_Rawdata_P:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_Open_Rawdata_P, X_Channel, Y_Channel);
-	printk("PS_Config_Lmt_Open_Rawdata_N:\n");
+	NVT_LOG("PS_Config_Lmt_Open_Rawdata_N:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_Open_Rawdata_N, X_Channel, Y_Channel);
 
 	//---PS_Config_Lmt_FW_Rawdata---
-	printk("PS_Config_Lmt_FW_Rawdata_P:\n");
+	NVT_LOG("PS_Config_Lmt_FW_Rawdata_P:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_Rawdata_P, X_Channel, Y_Channel);
-	printk("PS_Config_Lmt_FW_Rawdata_N:\n");
+	NVT_LOG("PS_Config_Lmt_FW_Rawdata_N:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_Rawdata_N, X_Channel, Y_Channel);
 
 	//---PS_Config_Lmt_FW_CC---
-	printk("PS_Config_Lmt_FW_CC_P:\n");
+	NVT_LOG("PS_Config_Lmt_FW_CC_P:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_CC_P, X_Channel, Y_Channel);
-	printk("PS_Config_Lmt_FW_CC_N:\n");
+	NVT_LOG("PS_Config_Lmt_FW_CC_N:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_CC_N, X_Channel, Y_Channel);
 
 	//---PS_Config_Lmt_FW_Diff---
-	printk("PS_Config_Lmt_FW_Diff_P:\n");
+	NVT_LOG("PS_Config_Lmt_FW_Diff_P:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_Diff_P, X_Channel, Y_Channel);
-	printk("PS_Config_Lmt_FW_Diff_N:\n");
+	NVT_LOG("PS_Config_Lmt_FW_Diff_N:\n");
 	nvt_print_lmt_array(PS_Config_Lmt_FW_Diff_N, X_Channel, Y_Channel);
 
 	NVT_LOG("--\n");
@@ -374,7 +374,7 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 	int32_t keydata_output_offset = 0;
 #endif /* #if TOUCH_KEY_NUM > 0 */
 
-	printk("%s:++\n", __func__);
+	NVT_LOG("%s:++\n", __func__);
 	fbufp = (char *)kzalloc(8192, GFP_KERNEL);
 	if (!fbufp) {
 		NVT_ERR("kzalloc for fbufp failed!\n");
@@ -387,7 +387,7 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 			sprintf(fbufp + iArrayIndex * 7 + y * 2, "%5d, ", rawdata[iArrayIndex]);
 		}
 		nvt_print_data_log_in_one_line(rawdata + y * x_ch, x_ch);
-		printk("\n");
+		NVT_LOG("\n");
 		sprintf(fbufp + (iArrayIndex + 1) * 7 + y * 2,"\r\n");
 	}
 #if TOUCH_KEY_NUM > 0
@@ -397,7 +397,7 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 		sprintf(fbufp + keydata_output_offset + k * 7, "%5d, ", rawdata[iArrayIndex]);
 	}
 	nvt_print_data_log_in_one_line(rawdata + y_ch * x_ch, Key_Channel);
-	printk("\n");
+	NVT_LOG("\n");
 	sprintf(fbufp + y_ch * x_ch * 7 + y_ch * 2 + Key_Channel * 7, "\r\n");
 #endif /* #if TOUCH_KEY_NUM > 0 */
 
@@ -445,7 +445,7 @@ static int32_t nvt_save_rawdata_to_csv(int32_t *rawdata, uint8_t x_ch, uint8_t y
 		fbufp = NULL;
 	}
 
-	printk("%s:--\n", __func__);
+	NVT_LOG("%s:--\n", __func__);
 
 	return 0;
 }
@@ -561,7 +561,7 @@ static int32_t nvt_read_baseline(int32_t *xdata)
 	}
 #endif /* #if TOUCH_KEY_NUM > 0 */
 
-	printk("%s:\n", __func__);
+	NVT_LOG("%s:\n", __func__);
 	// Save Rawdata to CSV file
 	if (nvt_save_rawdata_to_csv(xdata, X_Channel, Y_Channel, FW_RAWDATA_CSV_FILE, 0) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -606,7 +606,7 @@ static int32_t nvt_read_CC(int32_t *xdata)
 	}
 #endif /* #if TOUCH_KEY_NUM > 0 */
 
-	printk("%s:\n", __func__);
+	NVT_LOG("%s:\n", __func__);
 	// Save Rawdata to CSV file
 	if (nvt_save_rawdata_to_csv(xdata, X_Channel, Y_Channel, FW_CC_CSV_FILE, 0) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -657,7 +657,7 @@ static int32_t nvt_read_fw_noise(int32_t *xdata)
 	frame_num = PS_Config_Diff_Test_Frame / 10;
 	if (frame_num <= 0)
 		frame_num = 1;
-	printk("%s: frame_num=%d\n", __func__, frame_num);
+	NVT_LOG("%s: frame_num=%d\n", __func__, frame_num);
 	nvt_enable_noise_collect(frame_num);
 	// need wait PS_Config_Diff_Test_Frame * 8.3ms
 	msleep(frame_num * 83);
@@ -695,7 +695,7 @@ static int32_t nvt_read_fw_noise(int32_t *xdata)
 	//---Leave Test Mode---
 	nvt_change_mode(NORMAL_MODE);
 
-	printk("%s:RawData_Diff_Max:\n", __func__);
+	NVT_LOG("%s:RawData_Diff_Max:\n", __func__);
 	// Save Rawdata to CSV file
 	if (nvt_save_rawdata_to_csv(RawData_Diff_Max, X_Channel, Y_Channel, NOISE_TEST_CSV_FILE, 0) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -707,7 +707,7 @@ static int32_t nvt_read_fw_noise(int32_t *xdata)
 #else
 	rawdata_diff_min_offset = Y_Channel * X_Channel * 7 + Y_Channel * 2;
 #endif /* #if TOUCH_KEY_NUM > 0 */
-	printk("%s:RawData_Diff_Min:\n", __func__);
+	NVT_LOG("%s:RawData_Diff_Min:\n", __func__);
 	// Save Rawdata to CSV file
 	if (nvt_save_rawdata_to_csv(RawData_Diff_Min, X_Channel, Y_Channel, NOISE_TEST_CSV_FILE, rawdata_diff_min_offset) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -834,7 +834,7 @@ static int32_t nvt_read_fw_open(int32_t *xdata)
 	nvt_change_mode(NORMAL_MODE);
 
 
-	printk("%s:RawData_Open\n", __func__);
+	NVT_LOG("%s:RawData_Open\n", __func__);
 	// Save RawData to CSV file
 	if (nvt_save_rawdata_to_csv(xdata, X_Channel, Y_Channel, OPEN_TEST_CSV_FILE, 0) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -928,7 +928,7 @@ static int32_t nvt_read_fw_short(int32_t *xdata)
 	//---Leave Test Mode---
 	nvt_change_mode(NORMAL_MODE);
 
-	printk("%s:RawData_Short\n", __func__);
+	NVT_LOG("%s:RawData_Short\n", __func__);
 	// Save Rawdata to CSV file
 	if (nvt_save_rawdata_to_csv(xdata, X_Channel, Y_Channel, SHORT_TEST_CSV_FILE, 0) < 0) {
 		NVT_ERR("save rawdata to CSV file failed\n");
@@ -1096,46 +1096,46 @@ static int32_t c_show_selftest(struct seq_file *m, void *v)
 	/*SPI test result*/
 	if (TestResult_SPI == 0) {
 		ITO_result[1] = 'P';
-		printk("[%s]: ITO SPI test succeed!\n", __func__);
+		NVT_LOG("[%s]: ITO SPI test succeed!\n", __func__);
 	} else {
 		ITO_result[1] = 'F';
-		printk("[%s]: ITO SPI test fail!\n", __func__);
+		NVT_LOG("[%s]: ITO SPI test fail!\n", __func__);
 	}
 
 	/* FW_Rawdata  test result*/
 	if (TestResult_FW_Rawdata == 0) {
 		ITO_result[4] = 'P';
-		printk("[%s]: ITO FW_Rawdata test succeed!\n", __func__);
+		NVT_LOG("[%s]: ITO FW_Rawdata test succeed!\n", __func__);
 	} else {
 		ITO_result[4] = 'F';
-		printk("[%s]: ITO FW_Rawdata test fail!\n", __func__);
+		NVT_LOG("[%s]: ITO FW_Rawdata test fail!\n", __func__);
 	}
 
 	/* open test result*/
 	if (TestResult_Open == 0) {
 		ITO_result[7] = 'P';
-		printk("[%s]: ITO Open test succeed!\n", __func__);
+		NVT_LOG("[%s]: ITO Open test succeed!\n", __func__);
 	} else {
 		ITO_result[7] = 'F';
-		printk("[%s]: ITO Open test fail!\n", __func__);
+		NVT_LOG("[%s]: ITO Open test fail!\n", __func__);
 	}
 
 	/* short test result*/
 	if (TestResult_Short == 0) {
 		ITO_result[10] = 'P';
-		printk("[%s]: ITO Short test succeed!\n", __func__);
+		NVT_LOG("[%s]: ITO Short test succeed!\n", __func__);
 	} else {
 		ITO_result[10] = 'F';
-		printk("[%s]: ITO Short test fail!\n", __func__);
+		NVT_LOG("[%s]: ITO Short test fail!\n", __func__);
 	}
 
 	/* Noise test result*/
 	if (TestResult_Noise == 0) {
 		ITO_result[13] = 'P';
-		printk("[%s]: ITO Noise test succeed!\n", __func__);
+		NVT_LOG("[%s]: ITO Noise test succeed!\n", __func__);
 	} else {
 		ITO_result[13] = 'F';
-		printk("[%s]: ITO Noise test fail!\n", __func__);
+		NVT_LOG("[%s]: ITO Noise test fail!\n", __func__);
 	}
 	nvt_mp_seq_printf(m, "%s\n", ITO_result);
 #else
@@ -1477,9 +1477,9 @@ int32_t nvt_mp_parse_ain(struct device_node *np, const char *name, uint8_t *arra
 			array[i] = tmp[i];
 
 #if NVT_DEBUG
-		printk("[NVT-ts] %s = ", name);
+		NVT_LOG("[NVT-ts] %s = ", name);
 		nvt_print_result_log_in_one_line(array, len);
-		printk("\n");
+		NVT_LOG("\n");
 #endif
 	}
 
@@ -1543,11 +1543,11 @@ int32_t nvt_mp_parse_array(struct device_node *np, const char *name, int32_t *ar
 		NVT_LOG("%s =\n", name);
 		for (j = 0; j < Y_Channel; j++) {
 			nvt_print_data_log_in_one_line(array + j * X_Channel, X_Channel);
-			printk("\n");
+			NVT_LOG("\n");
 		}
 #if TOUCH_KEY_NUM > 0
 		nvt_print_data_log_in_one_line(array + Y_Channel * X_Channel, Key_Channel);
-		printk("\n");
+		NVT_LOG("\n");
 #endif
 #endif
 	}
