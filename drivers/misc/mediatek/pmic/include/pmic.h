@@ -14,7 +14,7 @@
 #ifndef _PMIC_SW_H_
 #define _PMIC_SW_H_
 
-#define PMIC_DEBUG
+#define PMIC_DEBUG 0
 
 #include <linux/smp.h>
 #include <linux/device.h>
