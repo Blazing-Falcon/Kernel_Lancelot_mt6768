@@ -23,12 +23,12 @@
 #define IRQTag "KEEPER"
 #define pr_fmt(fmt) MyTag "[%s] " fmt, __func__
 
-#define ISP_DEBUG
+#define ISP_DEBUG 0
 #ifdef ISP_DEBUG
 #define LOG_DBG(format, args...)    pr_info(MyTag "[%s] " format, \
 	 __func__, ##args)
 #else
-#define LOG_DBG(format, args...)
+#define LOG_DBG(format, args...) ((void)0)
 #endif
 
 #define LOG_INF(format, args...)       pr_info(MyTag "[%s] " format, \
