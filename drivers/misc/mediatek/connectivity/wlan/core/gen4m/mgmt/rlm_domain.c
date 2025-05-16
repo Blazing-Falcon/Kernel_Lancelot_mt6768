@@ -3902,6 +3902,7 @@ struct TX_PWR_CTRL_ELEMENT *txPwrCtrlStringToStruct(char *pcContent,
 	char acTmpName[MAX_TX_PWR_CTRL_ELEMENT_NAME_SIZE];
 	char *pcContCur = NULL, *pcContCur2 = NULL, *pcContEnd = NULL;
 	char *pcContTmp = NULL, *pcContNext = NULL, *pcContOld = NULL;
+	char *check = NULL, *checkTwo = NULL;
 	uint32_t u4MemSize = sizeof(struct TX_PWR_CTRL_ELEMENT);
 	uint32_t copySize = 0;
 	uint8_t i, j, op, ucSettingCount = 0;
@@ -4106,6 +4107,12 @@ skipLabel:
 			       "parse error: not segments, %s\n",
 			       pcContCur);
 			goto clearLabel;
+		}
+
+		check = pcContCur + 2;
+		checkTwo = kalStrChr(check, '[');
+		if (checkTwo) {
+			pcContCur = checkTwo + 1;
 		}
 
 		/* parse channel setting type */
