@@ -750,9 +750,9 @@ void battery_update(struct battery_data *bat_data)
 	battery_update_psd(&battery_main);
 	if (bat_data->BAT_CAPACITY == 100 && upmu_get_rgs_chrdet() != 0 && bat_data->BAT_STATUS != POWER_SUPPLY_STATUS_DISCHARGING && chg_done && bat_data->BAT_batt_temp < 45) {
 		bat_data->BAT_STATUS = POWER_SUPPLY_STATUS_FULL;
-	bm_err("battery_update set FULL! ui:%d chr:%d %d done:%d\n", bat_data->BAT_CAPACITY, upmu_get_rgs_chrdet(), bat_data->BAT_STATUS, chg_done);
+	bm_debug("battery_update set FULL! ui:%d chr:%d %d done:%d\n", bat_data->BAT_CAPACITY, upmu_get_rgs_chrdet(), bat_data->BAT_STATUS, chg_done);
 	}
-	bm_err("battery_update status: ui:%d chr:%d status%d done:%d temp:%d\n", bat_data->BAT_CAPACITY, upmu_get_rgs_chrdet(), bat_data->BAT_STATUS, chg_done, bat_data->BAT_batt_temp);
+	bm_debug("battery_update status: ui:%d chr:%d status%d done:%d temp:%d\n", bat_data->BAT_CAPACITY, upmu_get_rgs_chrdet(), bat_data->BAT_STATUS, chg_done, bat_data->BAT_batt_temp);
 
 #if defined(CONFIG_MTK_DISABLE_GAUGE)
 	return;

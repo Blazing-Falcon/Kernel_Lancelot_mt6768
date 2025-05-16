@@ -1495,7 +1495,7 @@ static int smb1351_set_suspend_to_iic(struct charger_device *chg_dev, bool suspe
 		if (rc)
 			pr_err("Couldn't set CMD_INPUT_LIMIT_REG rc=%d\n", rc);
 	}
-	pr_err("---set1 suspend en : %d\n", suspend);
+	pr_debug("---set1 suspend en : %d\n", suspend);
 	return 0;
 }
 

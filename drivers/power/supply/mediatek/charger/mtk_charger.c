@@ -860,7 +860,7 @@ void charger_manager_set_prop_system_temp_level(int temp_level)
 	if (pcba_to_thermal == PCBA_J15S_MP_CN)
 		is_cn = true;
 #endif
-	pr_err("thermal_pcba is %d, is_cn:%d\n", pcba_to_thermal, is_cn);
+	pr_debug("thermal_pcba is %d, is_cn:%d\n", pcba_to_thermal, is_cn);
 	if (temp_level > pinfo->system_temp_level_max)
 		pinfo->system_temp_level = pinfo->system_temp_level_max;
 	else
@@ -901,7 +901,7 @@ void charger_manager_set_prop_system_temp_level(int temp_level)
 	} else {
 		thermal_is_500 = false;
 	}
-	pr_err("%s, system_temp_level:%d thermal_icl_ua:%d usb_type:%d\n", __func__,
+	pr_debug("%s, system_temp_level:%d thermal_icl_ua:%d usb_type:%d\n", __func__,
 			pinfo->system_temp_level, thermal_icl_ua, pinfo->usb_psy->desc->type);
 
 	// pr_err("%s, system_temp_level:%d thermal_icl_ua:%d \n", __func__,
