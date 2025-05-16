@@ -1281,7 +1281,7 @@ static int sensor_send_timestamp_to_hub(void)
 	struct SCP_sensorHub_data *obj = obj_data;
 
 	if (READ_ONCE(rtc_compensation_suspend)) {
-		pr_err("rtc_compensation_suspend suspend,drop time sync\n");
+		pr_debug("rtc_compensation_suspend suspend,drop time sync\n");
 		return 0;
 	}
 

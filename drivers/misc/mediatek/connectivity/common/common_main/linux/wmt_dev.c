@@ -233,7 +233,7 @@ static INT32 wmt_fb_notifier_callback(struct notifier_block *self, ULONG event, 
 		atomic_set(&g_es_lr_flag_for_quick_sleep, 0);
 		atomic_set(&g_es_lr_flag_for_lpbk_onoff, 1);
 		atomic_set(&g_es_lr_flag_for_blank, 1);
-		WMT_WARN_FUNC("@@@@@@@@@@wmt enter UNBLANK @@@@@@@@@@@@@@\n");
+		WMT_DBG_FUNC("wmt enter UNBLANK\n");
 		if (hif_info == 0) {
 			atomic_set(&g_late_pwr_on_for_blank, 1);
 			break;
@@ -244,7 +244,7 @@ static INT32 wmt_fb_notifier_callback(struct notifier_block *self, ULONG event, 
 		atomic_set(&g_es_lr_flag_for_quick_sleep, 1);
 		atomic_set(&g_es_lr_flag_for_lpbk_onoff, 0);
 		atomic_set(&g_es_lr_flag_for_blank, 0);
-		WMT_WARN_FUNC("@@@@@@@@@@wmt enter early POWERDOWN @@@@@@@@@@@@@@\n");
+		WMT_DBG_FUNC("wmt enter early POWERDOWN\n");
 		schedule_work(&gPwrOnOffWork);
 		break;
 	default:

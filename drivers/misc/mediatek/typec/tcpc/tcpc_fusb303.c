@@ -2640,7 +2640,7 @@ static int fusb303_suspend(struct device *dev)
 	struct fusb303_chip *chip = i2c_get_clientdata(client);
 	struct device *cdev = &client->dev;
 
-	dev_err(cdev, "%s: enter\n", __func__);
+	dev_dbg(cdev, "%s: enter\n", __func__);
 
 	if (!chip) {
 		dev_err(cdev, "%s: No device is available!\n", __func__);
@@ -2656,7 +2656,7 @@ static int fusb303_resume(struct device *dev)
 	struct fusb303_chip *chip = i2c_get_clientdata(client);
 	struct device *cdev = &client->dev;
 
-	dev_err(cdev, "%s: enter\n", __func__);
+	dev_dbg(cdev, "%s: enter\n", __func__);
 
 	if (!chip) {
 		dev_err(cdev, "%s: No device is available!\n", __func__);

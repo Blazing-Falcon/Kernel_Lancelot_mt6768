@@ -733,13 +733,13 @@ static void connlog_log_data_handler(struct work_struct *work)
 				/* ret++; */
 			} else {
 				if (__ratelimit(&_rs))
-					pr_info("[connlog] %s emi ring is empty!!\n", type_to_title[i]);
+					pr_debug("[connlog] %s emi ring is empty!!\n", type_to_title[i]);
 			}
 		}
 	} while (ret);
 
 	if (__ratelimit(&_rs2))
-		pr_info("[connlog] irq counter=%d module=0x%04x\n",
+		pr_debug("[connlog] irq counter=%d module=0x%04x\n",
 			EMI_READ32(gDev.virAddrEmiLogBase + CONNLOG_IRQ_COUNTER_BASE), module);
 	spin_lock_irqsave(&gDev.irq_lock, gDev.flags);
 	if (gDev.eirqOn)
