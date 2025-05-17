@@ -799,15 +799,10 @@ static void exec_dlpt_callback(unsigned int dlpt_val)
 
 	g_dlpt_val = dlpt_val;
 
-	if (g_dlpt_stop == 1) {
-		pr_notice("[%s] g_dlpt_stop=%d\n", __func__,
-			g_dlpt_stop);
-	} else {
+	if (g_dlpt_stop != 1) {
 		for (i = 0; i < DLPT_NUM; i++) {
 			if (dlpt_cb_tb[i].dlpt_cb != NULL) {
 				dlpt_cb_tb[i].dlpt_cb(g_dlpt_val);
-				PMICLOG("[%s] g_dlpt_val=%d\n", __func__
-					, g_dlpt_val);
 			}
 		}
 	}
@@ -1086,22 +1081,11 @@ int dlpt_notify_handler(void *unused)
 			g_low_per_timer += 10;
 			if (g_low_per_timer > g_low_per_timeout_val)
 				g_low_per_timer = 0;
-			PMICLOG("[DLPT] g_low_per_timer=%d\n"
-				, g_low_per_timer);
-			PMICLOG("[DLPT] g_low_per_timeout_val%d\n"
-				, g_low_per_timeout_val);
 		} else {
 			g_low_per_timer = 0;
 		}
 
-		PMICLOG("[%s] %d %d %d %d %d\n", __func__
-			, pre_ui_soc, cur_ui_soc
-			, g_imix_val, g_low_per_timer, g_low_per_timeout_val);
-
-		PMICLOG("[DLPT] is running\n");
-		if (ptim_rac_val_avg == 0)
-			pr_info("[DLPT] ptim_rac_val_avg=0, skip\n");
-		else {
+		if (ptim_rac_val_avg != 0) {
 			if (upmu_get_rgs_chrdet())
 				g_imix_val = get_dlpt_imix_charging();
 			else
@@ -1112,10 +1096,6 @@ int dlpt_notify_handler(void *unused)
 				g_imix_val = IMAX_MAX_VALUE;
 			exec_dlpt_callback(g_imix_val);
 			pre_ui_soc = cur_ui_soc;
-
-			pr_debug("[DLPT_final] %d,%d,%d,%d,%d\n",
-				g_imix_val, pre_ui_soc, cur_ui_soc,
-				diff_ui_soc, IMAX_MAX_VALUE);
 		}
 
 		dlpt_notify_flag = false;
@@ -1124,17 +1104,14 @@ int dlpt_notify_handler(void *unused)
 		power_off_cnt = 0;
 #else
 		/* notify battery driver to power off by SOC=0*/
-		if (cur_ui_soc <= DLPT_POWER_OFF_THD) {
-			if (dlpt_check_power_off() == 1) {
+		if (cur_ui_soc <= DLPT_POWER_OFF_THD && dlpt_check_power_off() == 1) {
 				set_shutdown_cond(DLPT_SHUTDOWN);
 				power_off_cnt++;
-				pr_info("[DLPT_POWER_OFF_EN] notify SOC=0 to power off, power_off_cnt=%d\n"
-					, power_off_cnt);
 
 				if (power_off_cnt >= 4)
 					kernel_restart(
 						"DLPT reboot system");
-			} else
+			} else {
 				power_off_cnt = 0;
 		}
 #endif
