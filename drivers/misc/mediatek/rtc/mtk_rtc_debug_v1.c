@@ -3,6 +3,7 @@
  * Copyright (c) 2020 MediaTek Inc.
  */
 
+#ifdef CONFIG_MTK_ENG_BUILD
 #include <linux/debugfs.h>
 #include <linux/err.h>
 #include <linux/proc_fs.h>
@@ -121,4 +122,4 @@ static struct platform_driver mtk_rtc_dbg_driver = {
 };
 
 module_platform_driver(mtk_rtc_dbg_driver);
-
+#endif
