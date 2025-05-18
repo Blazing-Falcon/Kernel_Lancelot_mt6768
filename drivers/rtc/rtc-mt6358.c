@@ -1086,7 +1086,7 @@ static int mtk_rtc_pdrv_probe(struct platform_device *pdev)
 	struct mt6358_rtc *rtc;
 	unsigned long flags;
 	int ret;
-#if IS_ENABLED(CONFIG_MTK_RTC)
+#if defined(CONFIG_MTK_RTC) && defined(CONFIG_MTK_ENG_BUILD)
 	struct platform_device *plt_dev;
 #endif
 
@@ -1162,7 +1162,7 @@ static int mtk_rtc_pdrv_probe(struct platform_device *pdev)
 		pr_notice("%s: apply_lpsd_solution\n", __func__);
 	}
 
-#if IS_ENABLED(CONFIG_MTK_RTC)
+#if defined(CONFIG_MTK_RTC) && defined(CONFIG_MTK_ENG_BUILD)
 	plt_dev = platform_device_register_data(&pdev->dev, "mtk_rtc_dbg",
 						-1, NULL, 0);
 	if (IS_ERR(plt_dev))
