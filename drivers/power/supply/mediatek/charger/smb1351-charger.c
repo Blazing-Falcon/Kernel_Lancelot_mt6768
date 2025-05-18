@@ -2458,12 +2458,14 @@ static int smb1351_set_fastchg_current(struct charger_device *chg_dev, u32 uA)
 	return rc;
 }
 
+#ifdef CONFIG_MTK_ENG_BUILD
 static int smb1351_get_min_ichg(struct charger_device *chg_dev, u32 *uA)
 {
 	*uA = pre_chg_current[2] * 1000;
 	pr_info("get min ichg: %d \n", *uA);
 	return 0;
 }
+#endif
 
 static int smb1351_plug_out(struct charger_device *chg_dev)
 {
@@ -2892,7 +2894,9 @@ static struct charger_ops smb1351_chg_ops = {
 	.set_input_current = smb1351_set_usbchg_current,
 	.get_charging_current = smb1351_get_fastchg_current,
 	.set_charging_current = smb1351_set_fastchg_current,
+#ifdef CONFIG_MTK_ENG_BUILD
 	.get_min_charging_current = smb1351_get_min_ichg,
+#endif
 	.set_constant_voltage = smb1351_set_float_voltage,
 	.set_suspend = smb1351_set_suspend_to_iic,
 	.enable_chg_type_det = smb1351_enable_chg_type_det,
