@@ -207,15 +207,16 @@ int pmic_bif_init(void)
 
 int pmic_enable_hw_vbus_ovp(bool enable)
 {
-	int ret = 0;
 #if defined(CONFIG_MTK_PMIC_CHIP_MT6359) \
 || defined(CONFIG_MTK_PMIC_CHIP_MT6359P)
 	/* TODO check replace by which RG*/
+	return 0;
 #else
+	int ret = 0;
 	ret = pmic_set_register_value(PMIC_RG_VCDT_HV_EN, enable);
-#endif
 	if (ret != 0)
 		pr_notice("%s: failed, ret = %d\n", __func__, ret);
 
 	return ret;
+#endif
 }
