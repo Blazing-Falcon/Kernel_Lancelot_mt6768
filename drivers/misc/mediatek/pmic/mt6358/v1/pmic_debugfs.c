@@ -40,6 +40,7 @@ unsigned int pmic_dbg_level_set(unsigned int level)
 	return 0;
 }
 
+#ifdef CONFIG_MTK_ENG_BUILD
 /*
  * PMIC reg dump log
  */
@@ -121,13 +122,16 @@ void both_dump_exception_reg(struct seq_file *s)
 	/* 7.CLK TRIM */
 	both_output_reg(MT6358_TOP_CLK_TRIM);
 }
+#endif
 
 /* dump exception reg in kernel and clean status */
 int pmic_dump_exception_reg(void)
 {
 	int ret_val = 0;
 
+#ifdef CONFIG_MTK_ENG_BUILD
 	kernel_dump_exception_reg();
+#endif
 
 	/* clear UVLO off */
 	ret_val = pmic_set_register_value(PMIC_TOP_RST_STATUS_CLR, 0xFFFF);
