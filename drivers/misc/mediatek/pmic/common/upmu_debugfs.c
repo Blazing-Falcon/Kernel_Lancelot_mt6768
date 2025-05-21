@@ -38,21 +38,7 @@ unsigned int gPMICCOMDbgLvl; /* so far no used */
 
 int pmic_pre_wdt_reset(void)
 {
-	int ret = 0;
-/* remove dump exception status before wdt, since we will recore
- * it at next boot preloader
- */
-#if 0
-	preempt_disable();
-	local_irq_disable();
-	pr_info(PMICTAG "[%s][pmic_boot_status]\n", __func__);
-	pmic_dump_exception_reg();
-#if DUMP_ALL_REG
-	pmic_dump_register();
-#endif
-#endif
-	return ret;
-
+	return 0;
 }
 
 int pmic_pre_condition1(void)

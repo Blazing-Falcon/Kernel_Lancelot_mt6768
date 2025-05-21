@@ -358,7 +358,7 @@ static int wk_bat_temp_dbg(int bat_temp_prev, int bat_temp)
 	unsigned short i;
 
 	vbif28 = auxadc_priv_read_channel(pmic_auxadc_dev, AUXADC_VBIF);
-	pr_notice("BAT_TEMP_PREV:%d,BAT_TEMP:%d,VBIF28:%d\n",
+	pr_debug("BAT_TEMP_PREV:%d,BAT_TEMP:%d,VBIF28:%d\n",
 		bat_temp_prev, bat_temp, vbif28);
 	if (bat_temp < 200 || abs(bat_temp_prev - bat_temp) > 100) {
 		wk_auxadc_dbg_dump();
