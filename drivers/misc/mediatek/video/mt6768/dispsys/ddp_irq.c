@@ -538,11 +538,13 @@ static int disp_irq_log_kthread_func(void *data)
 		wait_event_interruptible(disp_irq_log_wq, disp_irq_log_module);
 		DDPMSG("%s dump intr register: disp_irq_log_module=%d\n",
 		       __func__, disp_irq_log_module);
+#ifdef CONFIG_MTK_ENG_BUILD
 		for (i = 0; i < DISP_MODULE_NUM; i++) {
 			if ((disp_irq_log_module & (1 << i)) != 0)
 				ddp_dump_reg(i);
 
 		}
+#endif
 		disp_irq_log_module = 0;
 
 		/* rdma underflow trigger aee */
