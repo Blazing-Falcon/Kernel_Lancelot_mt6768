@@ -139,7 +139,9 @@ static DEVICE_ATTR(pmic_access, 0664, show_pmic_access, store_pmic_access);
  */
 static int pmic_dump_exception_show(struct seq_file *s, void *unused)
 {
+#ifdef CONFIG_MTK_ENG_BUILD
 	both_dump_exception_reg(s);
+#endif
 	return 0;
 }
 static int pmic_dump_exception_open(struct inode *inode, struct file *file)
