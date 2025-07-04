@@ -404,28 +404,28 @@ static void layering_rule_senario_decision(struct disp_layer_info *disp_info)
 
 	l_rule_info.primary_fps = 60;
 #if defined(CONFIG_MTK_DRAMC)
-	if (get_ddr_type() == TYPE_LPDDR3) {
-		if (primary_display_get_width() < 800) {
-			if (primary_display_get_height() < 1500)
+	//if (get_ddr_type() == TYPE_LPDDR3) {
+		//if (primary_display_get_width() < 800) {
+			//if (primary_display_get_height() < 1500)
 				/* LP3 HD & HD+(<=18:9) */
-				l_rule_info.bound_tb_idx =
-					HRT_BOUND_TYPE_LP3_HD;
-			else
+				//l_rule_info.bound_tb_idx =
+					//HRT_BOUND_TYPE_LP3_HD;
+			//else
 				/* LP3 HD+(>18:9) */
-				l_rule_info.bound_tb_idx =
-					HRT_BOUND_TYPE_LP3_HD_PLUS;
-		} else {
-			if (primary_display_get_height() < 2200)
+				//l_rule_info.bound_tb_idx =
+					//HRT_BOUND_TYPE_LP3_HD_PLUS;
+		//} else {
+			//if (primary_display_get_height() < 2200)
 				/* LP3 FHD & FHD+(<=18:9) */
-				l_rule_info.bound_tb_idx =
-					HRT_BOUND_TYPE_LP3;
-			else
+				//l_rule_info.bound_tb_idx =
+					//HRT_BOUND_TYPE_LP3;
+			//else
 				/* LP3 FHD+(>18:9) */
-				l_rule_info.bound_tb_idx =
-					HRT_BOUND_TYPE_LP3_PLUS;
-		}
+				//l_rule_info.bound_tb_idx =
+					//HRT_BOUND_TYPE_LP3_PLUS;
+		//}
 
-	} else {
+	//} else {
 		/* LPDDR4, LPDDR4X */
 		if (primary_display_get_width() < 800) {
 			if (primary_display_get_height() < 1500) {
@@ -464,7 +464,7 @@ static void layering_rule_senario_decision(struct disp_layer_info *disp_info)
 						HRT_BOUND_TYPE_LP3_PLUS;
 			}
 		}
-	}
+	//}
 #endif
 	mmprofile_log_ex(ddp_mmp_get_events()->hrt, MMPROFILE_FLAG_END,
 		l_rule_info.disp_path,
@@ -660,15 +660,15 @@ int layering_rule_get_mm_freq_table(enum HRT_OPP_LEVEL opp_level)
 	}
 
 #if defined(CONFIG_MTK_DRAMC)
-	if (get_ddr_type() == TYPE_LPDDR3)
+	//if (get_ddr_type() == TYPE_LPDDR3)
 		dramc_type = HRT_DRAMC_TYPE_LP3;
-	else {
+	//else {
 		/* LPDDR4-3733, LPDDR4-3200 */
 		if (dram_steps_freq(0) == 3600)
 			dramc_type = HRT_DRAMC_TYPE_LP4_3733;
 		else
 			dramc_type = HRT_DRAMC_TYPE_LP4_3200;
-	}
+	//}
 #endif
 	mmprofile_log_ex(ddp_mmp_get_events()->dvfs,
 		MMPROFILE_FLAG_PULSE, dramc_type, opp_level);

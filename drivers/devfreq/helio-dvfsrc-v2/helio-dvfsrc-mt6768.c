@@ -128,12 +128,8 @@ struct reg_config *dvfsrc_get_init_conf(void)
 
 	if (spmfw_idx < 0)
 		spmfw_idx = ARRAY_SIZE(dvfsrc_init_configs) - 1;
-
-	if (spmfw_idx == SPMFW_LP3_1CH_1866)
-		spmfw_idx = 1;
 	else
 		spmfw_idx = 0;
-	pr_info("dvfsrc init config index %d\n", spmfw_idx);
 
 	return dvfsrc_init_configs[spmfw_idx];
 }
@@ -143,15 +139,6 @@ void dvfsrc_update_md_scenario(bool blank)
 	switch (spm_get_spmfw_idx()) {
 	case SPMFW_LP4X_2CH_3600:
 	case SPMFW_LP4_2CH_3200:
-		if (blank) {
-			dvfsrc_write(DVFSRC_EMI_MD2SPM0_T, 0x0000003F);
-			dvfsrc_write(DVFSRC_EMI_MD2SPM1_T, 0x00000000);
-		} else {
-			dvfsrc_write(DVFSRC_EMI_MD2SPM0_T, 0x00000007);
-			dvfsrc_write(DVFSRC_EMI_MD2SPM1_T, 0x00000038);
-		}
-		break;
-	case SPMFW_LP3_1CH_1866:
 		if (blank) {
 			dvfsrc_write(DVFSRC_EMI_MD2SPM0_T, 0x0000003F);
 			dvfsrc_write(DVFSRC_EMI_MD2SPM1_T, 0x00000000);
@@ -633,9 +620,6 @@ void dvfsrc_enable_dvfs_freq_hopping(int gps_on)
 	static struct pm_qos_request gps_ddr_req;
 
 	if (!is_dvfsrc_enabled())
-		return;
-
-	if (spm_get_spmfw_idx() == SPMFW_LP3_1CH_1866)
 		return;
 
 	if (spm_get_spmfw_idx() == SPMFW_LP4X_2CH_3600)

@@ -780,9 +780,7 @@ static s32 get_io_width(void)
 	s32 io_width;
 	s32 ddr_type = get_ddr_type();
 
-	if (ddr_type == TYPE_LPDDR3)
-		io_width = 4;
-	else if (ddr_type == TYPE_LPDDR4 || ddr_type == TYPE_LPDDR4X)
+	if (ddr_type == TYPE_LPDDR4 || ddr_type == TYPE_LPDDR4X)
 		io_width = 2;
 	else
 		io_width = 4;
