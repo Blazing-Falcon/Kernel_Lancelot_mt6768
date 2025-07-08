@@ -67,15 +67,6 @@ static unsigned int mmprofile_meta_datacookie = 1;
 
 #define TAG_MMPROFILE "mmprofile"
 
-#ifdef CONFIG_TRACING
-
-#define ENABLE_MMP_TRACING
-#ifdef ENABLE_MMP_TRACING
-#define MMP_TRACING
-#endif
-
-#endif /* CONFIG_TRACING */
-
 static bool mmp_log_on;
 static bool mmp_trace_log_on;
 
