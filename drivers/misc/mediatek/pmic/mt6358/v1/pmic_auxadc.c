@@ -417,40 +417,6 @@ void wake_up_mdrt_thread(void)
 			__func__);
 }
 
-/* dump MDRT related register */
-static void mdrt_reg_dump(void)
-{
-#ifdef CONFIG_MTK_ENG_BUILD
-#ifdef CONFIG_MTK_PMIC_WRAP_HAL
-	pwrap_dump_all_register();
-#endif
-	pr_notice("AUXADC_ADC15 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_ADC15));
-	pr_notice("AUXADC_ADC16 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_ADC16));
-	pr_notice("AUXADC_ADC17 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_ADC17));
-	pr_notice("AUXADC_ADC31 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_ADC31));
-	pr_notice("AUXADC_MDRT_0 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_MDRT_0));
-	pr_notice("AUXADC_MDRT_1 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_MDRT_1));
-	pr_notice("AUXADC_MDRT_2 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_MDRT_2));
-	pr_notice("AUXADC_MDRT_3 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_MDRT_3));
-	pr_notice("AUXADC_MDRT_4 = 0x%x\n",
-		upmu_get_reg_value(MT6358_AUXADC_MDRT_4));
-	/*--AUXADC CLK--*/
-	pr_notice("RG_AUXADC_CK_PDN = 0x%x, RG_AUXADC_CK_PDN_HWEN = 0x%x\n",
-		pmic_get_register_value(PMIC_RG_AUXADC_CK_PDN),
-		pmic_get_register_value(PMIC_RG_AUXADC_CK_PDN_HWEN));
-#else
-	((void)0);
-#endif
-}
-
 /* Check MDRT_ADC data has changed or not */
 void mdrt_monitor(void)
 {
