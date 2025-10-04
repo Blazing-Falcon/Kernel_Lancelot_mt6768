@@ -259,38 +259,6 @@ static const char *_dsi_cmd_mode_parse_state(unsigned int state)
 	return "unknown";
 }
 
-static const char *_dsi_vdo_mode_parse_state(unsigned int state)
-{
-	switch (state) {
-	case 0x0001:
-		return "Video mode idle";
-	case 0x0002:
-		return "Sync start packet";
-	case 0x0004:
-		return "Hsync active";
-	case 0x0008:
-		return "Sync end packet";
-	case 0x0010:
-		return "Hsync back porch";
-	case 0x0020:
-		return "Video data period";
-	case 0x0040:
-		return "Hsync front porch";
-	case 0x0080:
-		return "BLLP";
-	case 0x0100:
-		return "--";
-	case 0x0200:
-		return "Mix mode using command mode transmission";
-	case 0x0400:
-		return "Command transmission in BLLP";
-	default:
-		return "unknown";
-	}
-
-	return "unknown";
-}
-
 enum DSI_STATUS DSI_DumpRegisters(enum DISP_MODULE_ENUM module, int level)
 {
 #if 0
