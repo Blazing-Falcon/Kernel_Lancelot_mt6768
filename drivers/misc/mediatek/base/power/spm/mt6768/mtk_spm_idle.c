@@ -316,6 +316,7 @@ void mtk_idle_post_process_by_chip(
 #define IDLE_TIMER_OUT_CRITERIA (32)    /* 1 ms (32k/sec)*/
 #define IDLE_PRINT_LOG_DURATION (5000)  /* 5 seconds */
 
+/*
 static bool check_print_log_duration(void)
 {
 	static unsigned long int pre_time;
@@ -330,6 +331,7 @@ static bool check_print_log_duration(void)
 
 	return ret;
 }
+*/
 
 static unsigned int mtk_idle_output_log(
 	int idle_type, const struct wake_status *wakesta,
