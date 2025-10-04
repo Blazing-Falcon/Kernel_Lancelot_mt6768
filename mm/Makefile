@@ -40,7 +40,7 @@ ifdef CONFIG_CROSS_MEMORY_ATTACH
 mmu-$(CONFIG_MMU)	+= process_vm_access.o
 endif
 
-obj-y			:= filemap.o mempool.o \
+obj-y			:= filemap.o mempool.o oom_kill.o \
 			   maccess.o page_alloc.o page-writeback.o \
 			   readahead.o swap.o truncate.o vmscan.o shmem.o \
 			   util.o mmzone.o vmstat.o backing-dev.o \
@@ -50,9 +50,6 @@ obj-y			:= filemap.o mempool.o \
 			   debug.o $(mmu-y)
 
 obj-y += init-mm.o
-ifndef CONFIG_DISABLE_OOM_KILLER
-	obj-y += oom_kill.o
-endif
 
 ifdef CONFIG_NO_BOOTMEM
 	obj-y		+= nobootmem.o
