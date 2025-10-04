@@ -1368,17 +1368,6 @@ static char g_aal_log_buffer[256] = "";
 static int g_aal_log_index;
 struct timeval g_aal_log_prevtime = {0};
 
-static unsigned long timevaldiff(struct timeval *starttime,
-	struct timeval *finishtime)
-{
-	unsigned long msec;
-
-	msec = (finishtime->tv_sec-starttime->tv_sec)*1000;
-	msec += (finishtime->tv_usec-starttime->tv_usec)/1000;
-
-	return msec;
-}
-
 /* static void disp_aal_notify_backlight_log(int bl_1024)
 {
 	struct timeval aal_time;
