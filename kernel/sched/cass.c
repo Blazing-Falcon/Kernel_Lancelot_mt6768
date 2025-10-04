@@ -39,13 +39,8 @@ unsigned long cass_cpu_util(int cpu, int this_cpu, bool sync)
 	unsigned long util = READ_ONCE(cfs_rq->avg.util_avg);
 
 	/* Deduct @current's util from this CPU if this is a sync wake */
-<<<<<<< HEAD
 	if (sync && cpu == this_cpu)
 		sub_positive(&util, task_util(current));
-=======
-	if (sync && cpu == this_cpu)
-		lsub_positive(&util, task_util(current));
->>>>>>> f2db07a4f81b (sched/cass: Eliminate redundant calls to smp_processor_id())
 
 	if (sched_feat(UTIL_EST))
 		util = max_t(unsigned long, util,
