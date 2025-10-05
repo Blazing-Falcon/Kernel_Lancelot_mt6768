@@ -738,9 +738,9 @@ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
 ifneq ($(cc-name),clang)
-KBUILD_CFLAGS   += -O2
+KBUILD_CFLAGS   += -O3
 else
-OPT_FLAGS       += -O2
+OPT_FLAGS       += -O3
 endif
 ifeq ($(cc-name),clang)
 OPT_FLAGS       += -march=armv8.2-a+dotprod -mcpu=cortex-a55+crypto+crc
