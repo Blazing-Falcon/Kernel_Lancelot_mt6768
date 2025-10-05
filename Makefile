@@ -729,29 +729,37 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, default-const-init-field-unsafe)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, default-const-init-var-unsafe)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, unused-variable)
 
+ifeq ($(cc-name),clang)
+ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
+POLLY_FLAGS	+= -mllvm -polly-run-dce
+endif
+endif
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
-KBUILD_CFLAGS   += -O3
-ifeq ($(cc-name),gcc)
-KBUILD_CFLAGS	+= -mcpu=cortex-a76.cortex-a55 -mtune=cortex-a76.cortex-a55
+ifneq ($(cc-name),clang)
+KBUILD_CFLAGS   += -O2
+else
+OPT_FLAGS       += -O2
 endif
 ifeq ($(cc-name),clang)
-KBUILD_CFLAGS	+= -mcpu=cortex-a55 -mtune=cortex-a55
-
+OPT_FLAGS       += -march=armv8.2-a+dotprod -mcpu=cortex-a55+crypto+crc
 ifdef CONFIG_LLVM_POLLY
-KBUILD_CFLAGS	+= -mllvm -polly \
-		   -mllvm -polly-run-inliner \
-		   -mllvm -polly-reschedule=1 \
-                   -mllvm -polly-loopfusion-greedy=1 \
-                   -mllvm -polly-postopts=1 \
+POLLY_FLAGS	+= -mllvm -polly \
 		   -mllvm -polly-ast-use-context \
-		   -mllvm -polly-detect-keep-going \
-		   -mllvm -polly-vectorizer=stripmine \
-		   -mllvm -polly-invariant-load-hoisting
+		   -mllvm -polly-invariant-load-hoisting \
+		   -mllvm -polly-loopfusion-greedy=1 \
+		   -mllvm -polly-postopts=1 \
+		   -mllvm -polly-reschedule=1 \
+		   -mllvm -polly-run-inliner \
+		   -mllvm -polly-vectorizer=stripmine
+OPT_FLAGS       += $(POLLY_FLAGS)
 endif
 endif
 endif
+KBUILD_AFLAGS   += $(OPT_FLAGS)
+KBUILD_CFLAGS	+= $(OPT_FLAGS)
+KBUILD_LDFLAGS  += $(OPT_FLAGS)
 
 # Tell gcc to never replace conditional load with a non-conditional one
 KBUILD_CFLAGS	+= $(call cc-option,--param=allow-store-data-races=0)
